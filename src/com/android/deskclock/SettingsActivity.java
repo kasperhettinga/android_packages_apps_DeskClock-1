@@ -54,6 +54,8 @@ public class SettingsActivity extends PreferenceActivity
             "show_status_bar_icon";
     public static final String KEY_ALARM_SNOOZE =
             "snooze_duration";
+    public static final String KEY_VOLUME_BEHAVIOR =
+            "volume_button_setting";
     public static final String KEY_AUTO_SILENCE =
             "auto_silence";
     public static final String KEY_CLOCK_STYLE =
@@ -62,18 +64,10 @@ public class SettingsActivity extends PreferenceActivity
             "home_time_zone";
     public static final String KEY_AUTO_HOME_CLOCK =
             "automatic_home_clock";
-    public static final String KEY_VOLUME_ACTION =
+    public static final String KEY_VOLUME_BUTTONS =
             "volume_button_setting";
-    public static final String KEY_FLIP_ACTION =
-            "flip_action_setting";
 
-    // default action for alarm action
-    public static final String DEFAULT_ALARM_ACTION = "0";
-
-    // constants for no action/snooze/dismiss
-    public static final int ALARM_NO_ACTION = 0;
-    public static final int ALARM_SNOOZE = 1;
-    public static final int ALARM_DISMISS = 2;
+    public static final String DEFAULT_VOLUME_BEHAVIOR = "0";
 
     private static CharSequence[][] mTimezones;
     private long mTime;
@@ -182,11 +176,7 @@ public class SettingsActivity extends PreferenceActivity
             Preference homeTimeZone = findPreference(KEY_HOME_TZ);
             homeTimeZone.setEnabled(!state);
             notifyHomeTimeZoneChanged();
-        } else if (KEY_VOLUME_ACTION.equals(pref.getKey())) {
-            final ListPreference listPref = (ListPreference) pref;
-            final int idx = listPref.findIndexOfValue((String) newValue);
-            listPref.setSummary(listPref.getEntries()[idx]);
-        } else if (KEY_FLIP_ACTION.equals(pref.getKey())) {
+        } else if (KEY_VOLUME_BUTTONS.equals(pref.getKey())) {
             final ListPreference listPref = (ListPreference) pref;
             final int idx = listPref.findIndexOfValue((String) newValue);
             listPref.setSummary(listPref.getEntries()[idx]);
@@ -234,11 +224,7 @@ public class SettingsActivity extends PreferenceActivity
         listPref.setEnabled(state);
         listPref.setSummary(listPref.getEntry());
 
-        listPref = (ListPreference) findPreference(KEY_VOLUME_ACTION);
-        listPref.setSummary(listPref.getEntry());
-        listPref.setOnPreferenceChangeListener(this);
-
-        listPref = (ListPreference) findPreference(KEY_FLIP_ACTION);
+        listPref = (ListPreference) findPreference(KEY_VOLUME_BUTTONS);
         listPref.setSummary(listPref.getEntry());
         listPref.setOnPreferenceChangeListener(this);
 
